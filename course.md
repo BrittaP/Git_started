@@ -2,7 +2,7 @@
 
 author:   Central Research Data Management of Kiel University
 email:    fdm@rz.uni-kiel.de
-version:  0.0.1
+version:  0.1.0
 language: en
 narrator: UK English Female
 
@@ -100,6 +100,10 @@ draw("@0", `@input`)
 
 # Getting started with Git and GitLab
 
+**Thorge Petersen, Britta Petersen, Thilo Paul-Stüve**
+
+Central Research Data Management of Kiel University
+
 > To see this document as an interactive LiaScript rendered version, click on the
 > following link/badge:
 >
@@ -143,7 +147,7 @@ At the end of this workshop you should
 
 - have an idea of the general concept of Git and can recall some important related terms.
 - be able to distinguish between local and remote repositories.
-- be able to use the [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de) web interface to creation a project/repository.
+- be able to use the [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de) web interface to create a project/repository.
 - be able to add files in a repository via [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de) Web interface
 - be able to change files in a repository via Web IDE
 - be able to add members to a [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de) repository via [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de) web interface.
@@ -157,12 +161,9 @@ Today we will show only a fraction of what there is to know about working with G
 
 Due to time limitation we will not demonstrate or only touch on the following topics
 
-- Working with a local Git client/ local clones
-- Working with command line
-- Branches and merches
-- Further advanced Git operations 
+- Working with command line or GUI clients
+- Further advanced Git operations
 - Subject-specific issues
-
 
 ## Warm up
 
@@ -323,7 +324,7 @@ note top of [Repository 1]: Peer-to-Peer
 
 ![Linus Torvalds](/assets/images/Linus_Torvalds_Wikimedia.jpeg) <!-- align=right -->
 
-* **Git is a complex beast**
+* Warning: **Git is a complex beast**
 * Open Source DVCS developed by Linus Torvalds[^1] for Linux-Kernel development
 * Developed for
 
@@ -394,19 +395,19 @@ note top of [Repository 1]: Peer-to-Peer
   1. You make additions and changes in your workspace
   2. You add the changes you want to put in your repository to the index
   3. You commit these changes to the repository, specifying the topic of the changes
-  4. You may refer to this later and can continue with 1
+  4. You may refer to this later, push it somewhere else, or can continue with 1.
 
 ```text @plantUML
 @startuml
-folder workspace
+folder evilAI
 folder code
 folder data
 file advancedReasoning.lisp #pink
 file unconscionableAI.lisp
 file googleDump.csv
 file facebookDump.csv
-workspace -- code
-workspace -- data
+evilAI -- code
+evilAI -- data
 code -- advancedReasoning.lisp
 code -- unconscionableAI.lisp
 data -- googleDump.csv
@@ -414,12 +415,14 @@ data -- facebookDump.csv
 @enduml
 ```
 
+(The repository information is stored in a hidden folder in the repository directory)
+
 {{1}}
 ********************************************************************************
 
-**How does this work in an efficient way?**
+**How Does This Work**
 
-* When directories and files are added to the _index_, they are transformed to _trees_ and _blobs_ and are put on the list for the next commit
+* When directories and files in your workspace are added to the _index_, they are transformed to _trees_ and _blobs_ and are put on the list for the next commit
 
 ********************************************************************************
 
@@ -433,6 +436,8 @@ data -- facebookDump.csv
 
   ![Blob](assets/images/blobfish.png "(This is in fact a blobfish)") <!-- width=300px -->
 
+* Git command: [git ls-files](https://git-scm.com/docs/git-ls-files) (just FYI, you want need this very often)
+
 ********************************************************************************
 
 {{3}}
@@ -444,6 +449,8 @@ data -- facebookDump.csv
 * They refer to _blobs_ and have an ID
 
   ![Tree](assets/images/tree.png "(Trees in computer science are upside down)") <!-- width=500px -->
+
+* Git command: [git ls-tree](https://git-scm.com/docs/git-ls-tree) (again just FYI)
 
 ********************************************************************************
 
@@ -457,7 +464,9 @@ data -- facebookDump.csv
 * You may change the _index_ by adding or removing files and folders until you commit
 * So, when you add your _Workspace_ directory hierarchy and some files to the _index_, this happens:
 
-  ![Adding directroy hierarchy and files to the Git index](assets/images/Add_to_Index.png)
+  ![Adding directroy hierarchy and files to the Git index](assets/images/Add_to_Index.png) <!-- width=500px -->
+
+* Git command: [git add](https://git-scm.com/docs/git-add)
 
 ********************************************************************************
 
@@ -472,15 +481,57 @@ data -- facebookDump.csv
 
   ![Adding a commit to a Git repository](assets/images/Committing_to_Repository.png)
 
-* Your history of commits:
-
-  ![History of commits](assets/images/Commit_History.png)
+* Git command: [git commit](https://git-scm.com/docs/git-commit)
 
 ********************************************************************************
 
-## Introduction to Git: Tags, Branches and Branching
+{{6}}
+********************************************************************************
 
-* You may decide to
+* Your history of commits:
+
+  ![History of commits](assets/images/Commit_History.png) <!-- width=300px -->
+
+* Git command: [git log](https://git-scm.com/docs/git-log)
+
+********************************************************************************
+
+## Introduction to Git: Tags and Branches
+
+**Tags**
+
+* When you want to mark a specific _commit_ for later reference, you can tag it
+
+  * You can, e.g., mark a commit, that represents a  version of your work, such as '1.0.0' or 'preprint'
+
+* _Tags_ have a name and always refer to the same _commit_, unless you change it yourself
+
+  ![Git tag](assets/images/Tag.png) <!-- width=200px -->
+
+* Git command: [git tag](https://git-scm.com/docs/git-tag)
+
+{{1}}
+********************************************************************************
+
+**Branches**
+
+* When you work with a git repository you always work in a _branch_
+
+  * The default _branch_ is called 'main'
+
+* When you want to bring on a development undisturbed, want to test something without making your collaborators problems, you can make a new _branch_ for this
+* Common are _branches_ for
+
+  * A _branch_ for a working version (often the 'main' _branch_)
+  * A _branch_ for development (often called 'development')
+  * A _branch_ for new features (normally named after the feature that is realised)
+
+* _Branches_ are like tags and have a name and refer to a commit, but a _branch_ name always refers to the latest _commit_
+* You can _merge_ _branches_ by including all commits the branch to merge in the current branch (and deal with the conflicts)
+
+  ![Git branch](assets/images/Branch.png)  <!-- width=250px -->
+
+* Git commands: [git branch](https://git-scm.com/docs/git-branch) and [git merge](https://git-scm.com/docs/git-merge)
 
 ********************************************************************************
 
@@ -537,13 +588,21 @@ See 'git help git' for an overview of the system.
 
 ********************************************************************************
 
-## Introduction to Git: Some Basic Actions
+## Introduction to Git: Command Overview
 
 ```text @plantUML
 @startuml
-
+Workspace -> Index: git add <file> …
+Index -> Repository: git commit -m "message"
+Workspace <- Repository: git checkout <branch>
+Repository -> "Remote Repository": git push
+Repository <- "Remote Repository": git fetch
+Workspace <- Repository: git merge <commit>
+Workspace <- "Remote Repository": git pull
 @enduml
 ```
+
+* For further information refer to the Git Documentation Reference: [git add](https://git-scm.com/docs/git-add), [git commit](https://git-scm.com/docs/git-commit), [git checkout](https://git-scm.com/docs/git-checkout), [git push](https://git-scm.com/docs/git-push), [git fetch](https://git-scm.com/docs/git-fetch), [git checkout](https://git-scm.com/docs/git-checkout), [git merge](https://git-scm.com/docs/git-merge), [git pull](https://git-scm.com/docs/git-pull)
 
 ## GitLab Hands-on
 
@@ -1408,184 +1467,3 @@ If you want to go on learning about Git, try to have a look here:
 * [Git Documentation - Reference](https://git-scm.com/docs)
 * [Git from Bottom Up](https://jwiegley.github.io/git-from-the-bottom-up/)
 * [Oh my Git!](https://ohmygit.org/)
-
-## Further Topics: Git Client Software
-
-Git is a free software for distributed version management:
-
-- Git is a distributed versioning control system (DVCS), mainly used by programmers to issue changes to applications and keep track of the revisions.
-- Git is a actively maintained open source project originally developed in 2005 by Linus Torvalds.
-- Git is de facto standard: it is the most widely used modern version control system in the world today.
-- Many (software) projects rely on Git for version control, including commercial and open source projects alike.
-
-### Installation
-
-Before you can use Git, you must install it on your computer. Even if you already
-have Git installed, you should update it to the latest version.
-
-More information can be found in the [official documentation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-
-#### Mac OSX
-
-There are several ways to install Git on a Mac.
-
-If you have Xcode (or its command-line
-tools) installed on your system, Git may already be installed. You can check this
-by opening a terminal and typing `git --version`.
-
-```console
-$ git --version
-git version 2.7.0 (Apple Git-66)
-```
-
-Installing Git with Homebrew
-================
-
-If you use Homebrew for package management on OS X, you can install Git using the
-following instructions:
-
-1. Open your terminal and install Git using Homebrew:
-
-    `brew install git`
-
-2. Check with `git --version` if the installation was successful:
-
-    `git --version`
-
-#### Windows
-
-1. Download the latest version of the [Git for Windows installer](https://git-for-windows.github.io/).
-2. Once the installer starts, you should see the Git Setup wizard. Follow the on-screen instructions to complete the installation. The default options are a good choice for most users.
-
-#### Linux
-
-Debian/Ubuntu
-================
-
-1. Install Git from the shell using `apt-get`:
-
-    `sudo apt-get update && sudo apt-get install git`
-
-2. Check with `git --version` if the installation was successful:
-
-    `git --version`
-
-Fedora
-================
-
-1. Install Git from the shell using `dnf`:
-
-    `sudo dnf install git`
-
-    On older Fedora versions, you might need to use `yum` instead:
-
-    `sudo yum install git`
-
-2. Check with `git --version` if the installation was successful:
-
-    `git --version`
-
-#### Configuration
-
-No matter what operating system you have Git installed on, you should now configure
-your username and email. These two pieces of information will be associated with
-every commit you create in the future.
-
-Open a command prompt and run the commands below to configure your Git username
-and Git email address:
-
-```console
-git config --global user.name "Jane Doe"
-```
-
-```console
-git config --global user.email "janedoe@example.com"
-```
-
-### More information on Repositories
-
-> A Git repository is a virtual storage of your project. It allows you to store versions of your code and access them when needed.
-
-To interact with a repository locally on your system, you have two options:
-
-1. [Create a new Git repository](#create-new-repository)
-2. [Clone existing Git repository](#clone-existing-Git-repository)
-
-{{1}}
-********************************************************************************
-
-**Local and remote repositories:**
-
-> A Git repository can be local to your system, but it can also be located elsewhere.
->
-> - Your local repository has exactly the same features and functions as any other Git repository.
-> - A Git repository on a server (remote) is basically the same as a Git repository of a Git service (e.g. [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de/)), which in turn is the same as your colleague's local repository.
-
-If you created a new repository using `git init`, you don't have a remote repository
-to move your changes to. Typically, when you create a new repository, you use a
-Git service (e.g. [Gitlab RZ CAU](https://cau-git.rz.uni-kiel.de/)) and create a repository
-there. The Git service provides a Git URL that you add to your local Git repository.
-After that you are ready to push to the hosted repository using the `git push` command.
-
-**Note:**
-
-- Your *working directory* is the directory with your source files under git control.
-- Git is tracking the difference between your *working directory* and your *local repository*.
-- Git is also tracking the difference your *local repository* and (one of) the *remote repositories*.
-
-********************************************************************************
-
-{{2}}
-********************************************************************************
-
-**Command overview:**
-
-An overview on which level the different commands operate.
-
-```text @mermaid
-sequenceDiagram
-    Working Directory->>Staging Area: git add
-    Staging Area->>Local Repository: git commit
-    Local Repository-->>Remote Repository: git push
-    Remote Repository-->>Local Repository: git fetch
-    Local Repository->>Working Directory: git checkout
-    Local Repository->>Working Directory: git merge
-    Remote Repository-->>Working Directory: git pull
-    Working Directory->Staging Area: git diff
-    Working Directory->Local Repository: git diff HEAD
-```
-
-********************************************************************************
-
-### Set up a repository
-
-The following is an overview of how to set up a repository (repo) using Git version
-control:
-
-1. [Create a new Git repository](#create-new-repository)
-2. [Clone existing Git repository](#clone-existing-Git-repository)
-
-#### Create new repository
-
-The `git init` command creates a new Git repository. It can be used to convert an
-existing, unversioned project into a Git repository or to initialize a new, empty
-repository.
-
-Most other Git commands are not available outside of an initialized repository,
-so git init is usually the first command executed in a new project.
-
-We assume that you already have a project directory where you want to create the
-repository. Let's assume the path to the root of your working directory is `/your/project`.
-To init your new repository, you first need to navigate to the directory using the
-command line and then run the `git init` command:
-
-```console
-cd /your/project
-git init
-```
-
-> **Note:**
->
-> - You only have to init a repository once during the initial setup of a new repository.
-> - Running this command creates a new `.git` subdirectory in your current working directory.
-> - The `.git` directory will contain all of the configuration and metadata necessary for Git to keep track of your files and the changes that you make to them.
