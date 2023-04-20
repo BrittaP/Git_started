@@ -227,7 +227,7 @@ I would like to use Git for teaching.
 {{8}}
 ********************************************************************************
 
-I would like to use Git for versioning my research data.
+I already use Git for versioning my research data.
 
 ********************************************************************************
 
@@ -1437,9 +1437,9 @@ If everything worked, you will be informed that the merge was successful.
 
 Time for open questions and discussion!
 
-During the workshop you may also leave your questions here:
+During the workshop you may also leave your questions and comments here:
 
-[https://zumpad.zum.de/p/sfb1261](https://zumpad.zum.de/p/sfb1261)
+[https://zumpad.zum.de/p/git-started_questions](https://zumpad.zum.de/p/git-started_questions)
 
 ## Feedback
 
