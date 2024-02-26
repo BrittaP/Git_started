@@ -115,6 +115,11 @@ Central Research Data Management of Kiel University
 >
 > [fdm@rz.uni-kiel.de](mailto:fdm@rz.uni-kiel.de)
 
+!?[Testvideo](assets/git_commit.webm)<!--
+  width="560px"
+  height="315px"
+-->
+
 ## Agenda
 
 During the next two hours we will look at the following:
